@@ -1,17 +1,15 @@
- 
-
- 
+import RoomCard from "@/components/home/Card/RoomCard";
+import Comfort from "@/components/home/Comfort";
+import Renovated from "@/components/home/Renovated";
 
 const page = () => {
- 
-  
-
-
   return (
     <div>
-      home
+      <RoomCard/>
+      <Comfort />
+      <Renovated />
     </div>
-  )
-}
+  );
+};
 
-export default page
+export default page;
