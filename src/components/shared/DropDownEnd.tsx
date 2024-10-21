@@ -1,6 +1,6 @@
 "use client";
 
-import { useUser } from "@/app/context/user.provider";
+import { useUser } from "@/context/user.provider";
 import { logout } from "@/services/AuthService";
 /* eslint-disable jsx-a11y/no-noninteractive-tabindex */
 import Link from "next/link";
@@ -20,11 +20,9 @@ const DropDownEnd = () => {
     logout();
     userLoading(true);
 
-  
     // if (protectedRoutes.some((route) => pathname.match(route))) {
     //   router.push("/");
     // }
-    
   };
 
   return (
@@ -49,10 +47,21 @@ const DropDownEnd = () => {
               className="menu menu-sm dropdown-content bg-slate-700 rounded-box z-[1] mt-3 w-52 p-2 shadow"
             >
               <li>
-                <Link href="/" className="justify-between">
-                  Profile
-                  <span className="badge">New</span>
-                </Link>
+                {user?.role === "user" ? (
+                  <>
+                    <Link href="/profile" className="justify-between">
+                      Profile
+                      <span className="badge">New</span>
+                    </Link>
+                  </>
+                ) : (
+                  <>
+                    <Link href="/admin" className="justify-between">
+                      Dashboard
+                      <span className="badge">New</span>
+                    </Link>
+                  </>
+                )}
               </li>
               <li>
                 <Link href="/">Settings</Link>

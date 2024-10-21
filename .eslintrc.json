@@ -45,39 +45,41 @@
         "argsIgnorePattern": "^_.*?$"
       }
     ],
-    "import/order": [
-      "warn",
-      {
-        "groups": [
-          "type",
-          "builtin",
-          "object",
-          "external",
-          "internal",
-          "parent",
-          "sibling",
-          "index"
-        ],
-        "pathGroups": [
-          {
-            "pattern": "~/**",
-            "group": "external",
-            "position": "after"
-          }
-        ],
-        "newlines-between": "always"
-      }
-    ],
+    // "import/order": [
+    //   "warn",
+    //   {
+    //     "groups": [
+    //       "type",
+    //       "builtin",
+    //       "object",
+    //       "external",
+    //       "internal",
+    //       "parent",
+    //       "sibling",
+    //       "index"
+    //     ],
+    //     "pathGroups": [
+    //       {
+    //         "pattern": "~/**",
+    //         "group": "external",
+    //         "position": "after"
+    //       }
+    //     ],
+    //     "newlines-between": "always"
+    //   }
+    // ],
+
+
     "react/self-closing-comp": "warn",
-    "react/jsx-sort-props": [
-      "warn",
-      {
-        "callbacksLast": true,
-        "shorthandFirst": true,
-        "noSortAlphabetically": false,
-        "reservedFirst": true
-      }
-    ],
+    // "react/jsx-sort-props": [
+    //   "warn",
+    //   {
+    //     "callbacksLast": true,
+    //     "shorthandFirst": true,
+    //     "noSortAlphabetically": false,
+    //     "reservedFirst": true
+    //   }
+    // ],
     "padding-line-between-statements": [
       "warn",
       {"blankLine": "always", "prev": "*", "next": "return"},

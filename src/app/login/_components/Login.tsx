@@ -1,6 +1,6 @@
 "use client";
 
-import { useUser } from "@/app/context/user.provider";
+import { useUser } from "@/context/user.provider";
 import FXForm from "@/components/form/FXForm";
 import FXInput from "@/components/form/FXInput";
 import Loading from "@/components/UI/Loading";
@@ -10,21 +10,17 @@ import { FieldValues, SubmitHandler } from "react-hook-form";
 
 const Login = () => {
   const { mutate: handleUserLogin, isPending, isSuccess } = useUserLogin();
-  const {setIsLoading:userLoading}=useUser();
+  const { setIsLoading: userLoading } = useUser();
 
-  
   const searchParams = useSearchParams();
   const redirect = searchParams.get("redirect"); //get redirect path
   const router = useRouter();
-
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     console.log(data);
 
     handleUserLogin(data);
-    userLoading(true)
-
-
+    userLoading(true);
   };
 
   if (!isPending && isSuccess) {
