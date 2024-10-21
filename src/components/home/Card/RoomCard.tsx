@@ -1,12 +1,11 @@
 import img1 from "@/assets/banner/your_comfort_img1.png";
 import img2 from "@/assets/banner/your_comfort_img2.png";
 import img3 from "@/assets/banner/banner1.jpg";
-import SwiperCard from "./SwiperCard";
-import { FaBed, FaPeopleArrows } from "react-icons/fa";
+
 import CardSkeleton from "@/components/skeleton/CardSkeleton";
 import SingleRoomCard from "./SingleRoomCard";
 
-const RoomCard = () => {
+const RoomCard = ({ dataShow }: { dataShow: any }) => {
   const roomData = [
     {
       id: 1,
@@ -88,9 +87,21 @@ const RoomCard = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-          {roomData?.map((item, index) => (
-            <SingleRoomCard key={index} singleRoomData={item} />
-          ))}
+          {dataShow === true ? (
+            <>
+              {roomData?.map((item, index) => (
+                <SingleRoomCard key={index} singleRoomData={item} />
+              ))}
+            </>
+          ) : (
+            <>
+              {roomData
+                ?.slice(0, dataShow)
+                .map((item, index) => (
+                  <SingleRoomCard key={index} singleRoomData={item} />
+                ))}
+            </>
+          )}
         </div>
       </div>
     </>

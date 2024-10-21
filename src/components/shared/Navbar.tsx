@@ -12,12 +12,12 @@ const Navbar = () => {
     { title: "home", path: "/", iconNav: <FaHome /> },
     {
       title: "rooms",
-      path: "/",
+      path: "/room",
       iconNav: <FaBed />,
-      subItems: [
-        { title: "single", path: "/", iconNav: <FaBed /> },
-        { title: "double", path: "/", iconNav: <FaBed /> },
-      ],
+      // subItems: [
+      //   { title: "single", path: "/", iconNav: <FaBed /> },
+      //   { title: "double", path: "/", iconNav: <FaBed /> },
+      // ],
     },
     { title: "about", path: "/", iconNav: <FaInfoCircle /> },
     { title: "contact", path: "/", iconNav: <FaPhone /> },
@@ -53,7 +53,7 @@ const Navbar = () => {
             </>
           ) : (
             <li className="capitalize flex mb-2  lg:-mb-2">
-              <Link href="/">
+              <Link href={item?.path}>
                 {item?.iconNav} {item?.title}
               </Link>
             </li>

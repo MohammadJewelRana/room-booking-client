@@ -4,7 +4,7 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <div className="h-[calc(100vh-100px)]">
+    <div className=" ">
       <footer className="footer footer-center bg-slate-800   rounded p-10 text-white ">
         <nav className="grid grid-flow-col gap-4">
           <Link href="/" className="link link-hover">

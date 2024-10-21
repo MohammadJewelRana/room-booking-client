@@ -13,9 +13,9 @@ const layout = ({ children }: { children: React.ReactNode }) => {
           {/* <main className="container mx-auto max-w-7xl pt-16 px-6 flex-grow"> */}
           {children}
         </main>
-        {/* <div className="h-[calc(100vh-100px)]">
-        <Footer />
-        </div> */}
+       
+         <Footer />
+      
       </div>
     </div>
   );
