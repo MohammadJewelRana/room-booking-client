@@ -7,18 +7,13 @@ import clsx from "clsx";
 import { Providers } from "./providers";
 
 import { fontSans } from "@/config/fonts";
-import { siteConfig } from "@/config/site";
 
-export const metadata: Metadata = {
-  title: {
-    default: siteConfig.name,
-    template: `%s - ${siteConfig.name}`,
-  },
-  description: siteConfig.description,
-  icons: {
-    icon: "/favicon.ico",
-  },
-};
+import { metaDataSEO } from "@/utils/MetaData";
+
+export const metadata = metaDataSEO({
+  tabTitle: "roomBooker | Home",
+  des: "Welcome to our room booking website.",
+});
 
 export const viewport: Viewport = {
   themeColor: [
