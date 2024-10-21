@@ -1,19 +1,39 @@
 "use client";
 
+import { useUser } from "@/app/context/user.provider";
 import FXForm from "@/components/form/FXForm";
 import FXInput from "@/components/form/FXInput";
 import Loading from "@/components/UI/Loading";
 import { useUserLogin } from "@/hooks/auth";
+import { useRouter, useSearchParams } from "next/navigation";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 
 const Login = () => {
   const { mutate: handleUserLogin, isPending, isSuccess } = useUserLogin();
+  const {setIsLoading:userLoading}=useUser();
+
+  
+  const searchParams = useSearchParams();
+  const redirect = searchParams.get("redirect"); //get redirect path
+  const router = useRouter();
+
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     console.log(data);
 
     handleUserLogin(data);
+    userLoading(true)
+
+
   };
+
+  if (!isPending && isSuccess) {
+    if (redirect) {
+      router.push(redirect);
+    } else {
+      router.push("/");
+    }
+  }
 
   return (
     <div>
