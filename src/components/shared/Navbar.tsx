@@ -19,9 +19,9 @@ const Navbar = () => {
       //   { title: "double", path: "/", iconNav: <FaBed /> },
       // ],
     },
-    { title: "about", path: "/", iconNav: <FaInfoCircle /> },
-    { title: "contact", path: "/", iconNav: <FaPhone /> },
-    { title: "blog", path: "/", iconNav: <FaBlog /> },
+    { title: "about", path: "/about", iconNav: <FaInfoCircle /> },
+    { title: "contact", path: "/contact", iconNav: <FaPhone /> },
+    { title: "blog", path: "/blog", iconNav: <FaBlog /> },
   ];
 
   const navItems = (
