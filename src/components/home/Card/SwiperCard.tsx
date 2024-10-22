@@ -10,6 +10,8 @@ import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import Image from "next/image";
 
 const SwiperCard = ({imageArray}:any) => {
+  // console.log(imageArray);
+  
   const progressCircle = useRef<SVGCircleElement | null>(null);  
   const progressContent = useRef<HTMLDivElement | null>(null);  
 
@@ -43,10 +45,10 @@ const SwiperCard = ({imageArray}:any) => {
         {imageArray?.map((item:any, index:any) => (
           <SwiperSlide key={index}>
             <Image
-              src={item.src}
+              src={item}
               height={100}
               width={100}
-              className="h-[300px] w-[400px]"
+              className="h-[300px] w-[380px]"
               alt="room image"
             />
           </SwiperSlide>

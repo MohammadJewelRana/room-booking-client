@@ -28,6 +28,11 @@ const memberCountOptions = [
   { value: 1, label: "1 Member" },
   { value: 2, label: "2 Members" },
   { value: 3, label: "3 Members" },
+  { value: 4, label: "4 Members" },
+  { value: 5, label: "5 Members" },
+  { value: 6, label: "6 Members" },
+  { value: 7, label: "7 Members" },
+  { value: 8, label: "8 Members" },
 ];
 
 const Create = () => {
@@ -102,7 +107,13 @@ const Create = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+  <>
+
+<div>
+  <h1 className="text-center text-3xl  font-bold py-8">Create a Room</h1>
+</div>
+
+     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       {/* Room Title */}
       <div>
         <label className="block mb-2">Room Title</label>
@@ -249,6 +260,7 @@ const Create = () => {
         Submit
       </button>
     </form>
+  </>
   );
 };
 
