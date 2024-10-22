@@ -1,15 +1,19 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 "use client";
 
+import envConfig from "@/config/envConfig";
+import { useCreateRoom } from "@/hooks/createRoom.hook";
+import { imgbbUpload } from "@/utils/ImageUpload";
 import React, { useState } from "react";
 import { useForm, useFieldArray, Controller } from "react-hook-form";
 import Select, { SingleValue } from "react-select";
+import { toast } from "sonner";
 
 interface IFormInputs {
   roomTitle: string;
   rent: number;
-  bedCount: { label: string; value: number } | null; // Allow null
-  memberCount: { label: string; value: number } | null; // Allow null
+  bedCount: { label: string; value: number } | null;
+  memberCount: { label: string; value: number } | null;
   facilities: { value: string }[];
   images: File[];
 }
@@ -32,14 +36,18 @@ const Create = () => {
     handleSubmit,
     control,
     formState: { errors },
+    setValue,
+    reset,
   } = useForm<IFormInputs>({
     defaultValues: {
       facilities: [{ value: "" }],
       images: [],
-      bedCount: null, // Initialize to null
-      memberCount: null, // Initialize to null
+      bedCount: null,
+      memberCount: null,
     },
   });
+
+  const { mutate: handleCreateRoom, isPending } = useCreateRoom();
 
   const { fields, append, remove } = useFieldArray({
     control,
@@ -47,15 +55,50 @@ const Create = () => {
   });
 
   const [previewImages, setPreviewImages] = useState<string[]>([]);
+  const [selectedImages, setSelectedImages] = useState<File[]>([]);
 
-  const onSubmit = (data: IFormInputs) => {
-    console.log(data);
+  const onSubmit = async (data: IFormInputs) => {
+    let uploadedImages: string[] = [];
+
+    if (selectedImages.length > 0) {
+      uploadedImages = await imgbbUpload(selectedImages);
+    } else {
+      toast(" Add At-least One Image.Image upload failed!!");
+      return;
+    }
+
+    if (uploadedImages.length > 0) {
+      const formDataWithImages = {
+        ...data,
+        facilities: data.facilities.map((item) => item.value),
+        bedCount: data?.bedCount?.value,
+        memberCount: data?.memberCount?.value,
+        images: uploadedImages,
+      };
+      console.log(formDataWithImages);
+
+      handleCreateRoom(formDataWithImages);
+      reset();
+    } else {
+      toast("Failed to create a room!!");
+    }
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
+
+    setSelectedImages((prev) => [...prev, ...files]);
+
     const newPreviews = files.map((file) => URL.createObjectURL(file));
+
     setPreviewImages((prev) => [...prev, ...newPreviews]);
+
+    setValue("images", [...selectedImages, ...files]);
+  };
+
+  const handleRemoveImage = (index: number) => {
+    setSelectedImages((prev) => prev.filter((_, i) => i !== index));
+    setPreviewImages((prev) => prev.filter((_, i) => i !== index));
   };
 
   return (
@@ -68,7 +111,9 @@ const Create = () => {
           placeholder="Enter room title"
           className="border p-2 w-full bg-white text-black"
         />
-        {errors.roomTitle && <p className="text-red-500">{errors.roomTitle.message}</p>}
+        {errors.roomTitle && (
+          <p className="text-red-500">{errors.roomTitle.message}</p>
+        )}
       </div>
 
       {/* Rent */}
@@ -83,46 +128,57 @@ const Create = () => {
         {errors.rent && <p className="text-red-500">{errors.rent.message}</p>}
       </div>
 
-      {/* Bed Count */}
-      <div>
-        <label className="block mb-2">Bed Count</label>
-        <Controller
-          name="bedCount"
-          control={control}
-          render={({ field }) => (
-            <Select
-              {...field}
-              options={bedCountOptions}
-              placeholder="Select bed count"
-              isClearable // Allows the user to clear the selection
-              onChange={(selectedOption: SingleValue<{ value: number; label: string }>) => {
-                field.onChange(selectedOption);
-              }}
-            />
+      {/* Bed Count and Member Count in the same row */}
+      <div className="flex flex-col sm:flex-row sm:space-x-4">
+        {/* Bed Count */}
+        <div className="flex-1">
+          <label className="block mb-2">Bed Count</label>
+          <Controller
+            name="bedCount"
+            control={control}
+            render={({ field }) => (
+              <Select
+                {...field}
+                options={bedCountOptions}
+                placeholder="Select bed count"
+                isClearable
+                onChange={(
+                  selectedOption: SingleValue<{ value: number; label: string }>
+                ) => {
+                  field.onChange(selectedOption);
+                }}
+              />
+            )}
+          />
+          {errors.bedCount && (
+            <p className="text-red-500">{errors.bedCount.message}</p>
           )}
-        />
-        {errors.bedCount && <p className="text-red-500">{errors.bedCount.message}</p>}
-      </div>
+        </div>
 
-      {/* Member Count */}
-      <div>
-        <label className="block mb-2">Member Count</label>
-        <Controller
-          name="memberCount"
-          control={control}
-          render={({ field }) => (
-            <Select
-              {...field}
-              options={memberCountOptions}
-              placeholder="Select member count"
-              isClearable // Allows the user to clear the selection
-              onChange={(selectedOption: SingleValue<{ value: number; label: string }>) => {
-                field.onChange(selectedOption);
-              }}
-            />
+        {/* Member Count */}
+        <div className="flex-1 mt-4 sm:mt-0">
+          <label className="block mb-2">Member Count</label>
+          <Controller
+            name="memberCount"
+            control={control}
+            render={({ field }) => (
+              <Select
+                {...field}
+                options={memberCountOptions}
+                placeholder="Select member count"
+                isClearable
+                onChange={(
+                  selectedOption: SingleValue<{ value: number; label: string }>
+                ) => {
+                  field.onChange(selectedOption);
+                }}
+              />
+            )}
+          />
+          {errors.memberCount && (
+            <p className="text-red-500">{errors.memberCount.message}</p>
           )}
-        />
-        {errors.memberCount && <p className="text-red-500">{errors.memberCount.message}</p>}
+        </div>
       </div>
 
       {/* Facilities */}
@@ -162,24 +218,33 @@ const Create = () => {
           type="file"
           multiple
           accept="image/*"
+          {...register("images")} // Register images to the form
           onChange={handleImageChange}
           className="border p-2 w-full"
         />
         <div className="grid grid-cols-3 gap-4 mt-4">
           {previewImages.map((src, index) => (
-            <img
-              key={index}
-              src={src}
-              alt={`Preview ${index}`}
-              className="w-full h-32 object-cover"
-            />
+            <div key={index} className="relative">
+              <img
+                src={src}
+                alt={`Preview ${index}`}
+                className="w-full h-56 border p-2 rounded-md shadow-md object-cover"
+              />
+              <button
+                type="button"
+                onClick={() => handleRemoveImage(index)}
+                className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1"
+              >
+                X
+              </button>
+            </div>
           ))}
         </div>
       </div>
 
       <button
         type="submit"
-        className="px-4 py-2 bg-green-500 text-white rounded"
+        className="px-4 py-2 w-full bg-slate-900 text-white rounded-lg shadow-md hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-600 focus:ring-offset-2 transition duration-300 ease-in-out transform   my-8"
       >
         Submit
       </button>
