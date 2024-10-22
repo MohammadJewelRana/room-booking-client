@@ -14,13 +14,13 @@ export const useCreateBooking = () => {
   return useMutation<any, Error, FieldValues>({
     mutationKey: ["CREATE_Booking"],
     mutationFn: async (userData) => await createBooking(userData),
-    onSuccess: () => {
-      toast.success("Booking creation successful.");
-    },
-    onError: (error) => {
-      console.log(error, "auth");
-      toast.error(error.message);
-    },
+    // onSuccess: () => {
+    //   toast.success("Booking creation successful.");
+    // },
+    // onError: (error) => {
+    //   console.log(error, "auth");
+    //   toast.error(error.message);
+    // },
   });
 };
 

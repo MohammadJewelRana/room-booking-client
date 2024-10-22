@@ -29,7 +29,7 @@ const UserProvider = ({ children }: { children: ReactNode }) => {
     // console.log(user);
     
 
-    // setUser(user);
+    setUser(user);
     setIsLoading(false);
   };
 

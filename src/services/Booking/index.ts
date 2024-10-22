@@ -7,9 +7,12 @@ import { FieldValues } from "react-hook-form";
 
 export const createBooking = async (userData: FieldValues) => {
   try {
-    const { data } = await axiosInstance.post("/room/create-booking", userData);
+    const { data } = await axiosInstance.post(
+      "/booking/create-booking",
+      userData
+    );
 
-    revalidateTag('room');
+    revalidateTag("room");
 
     return data;
   } catch (error: any) {
@@ -44,7 +47,6 @@ export const getAllBooking = async () => {
     };
     const res = await fetch(`${envConfig.baseApi}/booking`, fetchOptions);
 
-
     return res.json();
   } catch (error: any) {
     console.log(error.response.data.message);
@@ -55,7 +57,7 @@ export const getAllBooking = async () => {
 export const deleteBookingById = async (id: string) => {
   try {
     const { data } = await axiosInstance.delete(`/booking/${id}`);
-    
+
     return data;
   } catch (error: any) {
     console.log(error.response.data.message);
@@ -82,5 +84,3 @@ export const updateSingleBookingById = async (id: string, updatedData: any) => {
     throw new Error(error.response.data.message);
   }
 };
-
-
