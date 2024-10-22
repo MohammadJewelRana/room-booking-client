@@ -2,6 +2,7 @@ import {
   createBooking,
   deleteBookingById,
   getAllBooking,
+  getMyBookingById,
   getSingleBookingById,
   updateSingleBookingById,
 } from "@/services/Booking";
@@ -51,6 +52,14 @@ export const useGetSingleBooking = (id: string) => {
   return useQuery({
     queryKey: ["BOOKING", id],
     queryFn: async () => await getSingleBookingById(id),
+    enabled: !!id,
+  });
+};
+
+export const useGetMyBooking = (id: string) => {
+  return useQuery({
+    queryKey: ["MY_BOOKING", id],
+    queryFn: async () => await getMyBookingById(id),
     enabled: !!id,
   });
 };

@@ -75,6 +75,16 @@ export const getSingleBookingById = async (id: string) => {
   }
 };
 
+export const getMyBookingById = async (id: string) => {
+  try {
+    const { data } = await axiosInstance.get(`/booking/myBooking/${id}`);
+    return data;
+  } catch (error: any) {
+    console.log(error.response.data.message);
+    throw new Error(error.response.data.message);
+  }
+};
+
 export const updateSingleBookingById = async (id: string, updatedData: any) => {
   try {
     const { data } = await axiosInstance.patch(`/booking/${id}`, updatedData);

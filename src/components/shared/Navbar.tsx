@@ -7,6 +7,7 @@ import { FaHome, FaBed, FaInfoCircle, FaPhone, FaBlog } from "react-icons/fa";
 
 import logo from "../../../public/next.svg";
 import DropDownEnd from "./DropDownEnd";
+import BookingNav from "../BookingNav";
 const Navbar = () => {
   const navItemData = [
     { title: "home", path: "/", iconNav: <FaHome /> },
@@ -28,39 +29,14 @@ const Navbar = () => {
     <>
       {navItemData?.map((item) => (
         <>
-         <li className="capitalize flex mb-2  lg:-mb-2">
-              <Link href={item?.path}>
-                {item?.iconNav} {item?.title}
-              </Link>
-            </li>
-          {/* {item?.subItems ? (
-            <>
-              {" "}
-              <li className="capitalize mb-2 lg:-mb-2">
-                <details>
-                  <summary>
-                    {item?.iconNav}
-                    {item?.title}
-                  </summary>
-                  <ul className="p-2 bg-slate-700">
-                    {item?.subItems?.map((item) => (
-                      <>
-                        <li className="lg:w-[200px] mb-2">
-                          <Link href="/">
-                            {item?.iconNav} {item?.title}{" "}
-                          </Link>
-                        </li>
-                      </>
-                    ))}
-                  </ul>
-                </details>
-              </li>
-            </>
-          ) : ( */}
-            
-          {/* )} */}
+          <li className="capitalize flex mb-2  lg:-mb-2">
+            <Link href={item?.path}>
+              {item?.iconNav} {item?.title}
+            </Link>
+          </li>
         </>
       ))}
+     <BookingNav/>
     </>
   );
 
@@ -110,10 +86,8 @@ const Navbar = () => {
           <ul className="menu menu-horizontal px-1">{navItems}</ul>
         </div>
         <div className="navbar-end">
-          <DropDownEnd/>
+          <DropDownEnd />
         </div>
-
-        
       </div>
     </div>
   );

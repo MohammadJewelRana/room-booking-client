@@ -37,7 +37,7 @@ const UserProvider = ({ children }: { children: ReactNode }) => {
     handleUser();
   }, [isLoading]);
 
-  console.log(user);
+  // console.log(user);
   
   return (
     <UserContext.Provider value={{ user, setUser, isLoading, setIsLoading }}>

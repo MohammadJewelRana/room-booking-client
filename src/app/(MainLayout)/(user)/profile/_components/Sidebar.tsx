@@ -7,7 +7,7 @@ const Sidebar = () => {
   const { user } = useUser();
 
   return (
-    <div className="w-full   h-full bg-slate-700 p-4 border rounded-lg text-white">
+    <div className="w-full    min-h-screen bg-slate-700 p-4 border rounded-lg text-white">
       {/* Profile Section */}
       <div className="flex flex-col items-center mb-6">
         <Image
