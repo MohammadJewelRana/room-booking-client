@@ -10,6 +10,9 @@ import {
   FaShoppingCart,
   FaCog,
 } from "react-icons/fa";
+ 
+
+ 
 
 const Layout = ({ children }: { children: ReactNode }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);

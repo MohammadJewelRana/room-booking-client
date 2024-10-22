@@ -8,16 +8,17 @@ const Footer = () => {
       <footer className="footer footer-center bg-slate-800   rounded p-10 text-white ">
         <nav className="grid grid-flow-col gap-4">
           <Link href="/" className="link link-hover">
+            Top
+          </Link>
+          <Link href="/about" className="link link-hover">
             About us
           </Link>
-          <Link href="/" className="link link-hover">
+          <Link href="/contact" className="link link-hover">
             Contact
           </Link>
-          <Link href="/" className="link link-hover">
-            Jobs
-          </Link>
-          <Link href="/" className="link link-hover">
-            Press kit
+
+          <Link href="/room" className="link link-hover">
+            Rooms
           </Link>
         </nav>
         <nav>
@@ -59,8 +60,8 @@ const Footer = () => {
         </nav>
         <aside>
           <p>
-            Copyright © {new Date().getFullYear()} - All right reserved by ACME
-            Industries Ltd
+            Copyright © {new Date().getFullYear()} - All right reserved by  RoomBooker Company
+            
           </p>
         </aside>
       </footer>

@@ -3,7 +3,11 @@ import Reservation from "../_components/Reservation";
 import LeftSidebar from "../_components/LeftSidebar";
 import AmenitiesRules from "../_components/AmenitiesRules";
 import RoomCard from "@/components/home/Card/RoomCard";
-
+import { metaDataSEO } from "@/utils/MetaData";
+export const metadata = metaDataSEO({
+  tabTitle: "roomBooker | Room Details",
+  des: "Welcome to our room booking website. Single Room Details ",
+});
 const Page = ({ params }: any) => {
   return (
     <div className="p-2  ">

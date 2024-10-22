@@ -1,6 +1,11 @@
  
+import { metaDataSEO } from "@/utils/MetaData";
 import AdminRoomCard from "./_components/AdminRoomCard";
 
+export const metadata = metaDataSEO({
+  tabTitle: "roomBooker | Admin | Room",
+  des: "Welcome to our room booking website. Admin Panel All Room",
+});
 const page = () => {
   return (
     <div>
