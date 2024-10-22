@@ -8,12 +8,14 @@ import { useForm } from "react-hook-form";
 import "react-datepicker/dist/react-datepicker.css"; // Import CSS for date picker
 import { formatToISO } from "@/utils/DateToIso";
 import { useGetSingleRoom } from "@/hooks/getSingleRoom.hook";
+import { useUser } from "@/context/user.provider";
 
 const Reservation = ({ id }: { id: string }) => {
     const [reservedDates, setReservedDates] = useState<Date[]>([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [grandTotal, setGrandTotal] = useState(0); // New state for grand total
 
+  const {user}=useUser();
   const { data, isLoading, isError, error } = useGetSingleRoom(id as string);
   const singleData = data?.data;
 //   console.log(singleData);
@@ -59,17 +61,25 @@ const Reservation = ({ id }: { id: string }) => {
     const finalTotal = totalRoomPrice + vatAmount;
     setGrandTotal(finalTotal);
   }, [roomCount]);
-
+  
+  console.log(user);
   const onSubmit = (data:any) => {
-    const finalData = {
-      ...data,
-      checkInDate: formatToISO(data.checkInDate),
-      checkOutDate: formatToISO(data.checkOutDate),
-      roomCount: parseInt(data?.roomCount),
-      numberOfPersons: parseInt(data?.numberOfPersons),
-      totalPrice: grandTotal,
-    };
-    console.log(finalData);
+
+ 
+
+    const bookingData={
+      userId:user?.userId,
+      roomId:singleData?._id,
+      dates:{
+        startDate:formatToISO(data.checkInDate),
+        endDate:formatToISO(data.checkOutDate)
+      },
+      roomCount,
+      roomRent:singleData?.rent,
+      vatPercentage,
+      grandTotal
+    }
+    console.log(bookingData);
 
     // Handle reservation submission (e.g., send to an API)
   };
@@ -111,21 +121,7 @@ const Reservation = ({ id }: { id: string }) => {
           )}
         </div>
 
-        {/* Room Type */}
-        <div className="mb-4">
-          <label className="block mb-2">Room Type:</label>
-          <select
-            {...register("roomType", { required: true })}
-            className="p-2 rounded-md w-full"
-          >
-            <option value="single">Single</option>
-            <option value="double">Double</option>
-            <option value="suite">Suite</option>
-          </select>
-          {errors.roomType && (
-            <p className="text-red-500">Select a room type</p>
-          )}
-        </div>
+       
 
         {/* Room Count */}
         <div className="mb-4">
