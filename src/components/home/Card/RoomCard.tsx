@@ -1,6 +1,4 @@
- 
-
-"use client"
+"use client";
 
 import CardSkeleton from "@/components/skeleton/CardSkeleton";
 import SingleRoomCard from "./SingleRoomCard";
@@ -69,7 +67,7 @@ const RoomCard = ({ dataShow }: { dataShow: any }) => {
   //     roomImages: [img3, img1, img2, img3],
   //   },
   // ];
-  
+
   const {
     data: roomAllData,
     isLoading,
@@ -80,15 +78,14 @@ const RoomCard = ({ dataShow }: { dataShow: any }) => {
 
   const roomData = roomAllData?.data;
   //   const isPending=true;
-  const isPending = false;
 
-  if (isPending) {
-    return <CardSkeleton />;
-  }
+  // if (isPending) {
+  //   return <CardSkeleton />;
+  // }
 
   return (
     <>
-      <div className="my-16">
+      <div className="my-16 mt-24">
         {/* Heading and Subheading */}
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold mb-2">Amazing Room </h1>
@@ -97,10 +94,11 @@ const RoomCard = ({ dataShow }: { dataShow: any }) => {
           </p>
         </div>
 
+        {isLoading && <CardSkeleton />}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
           {dataShow === true ? (
             <>
-              {roomData?.map((item:any, index:any) => (
+              {roomData?.map((item: any, index: any) => (
                 <SingleRoomCard key={index} singleRoomData={item} />
               ))}
             </>
@@ -108,7 +106,7 @@ const RoomCard = ({ dataShow }: { dataShow: any }) => {
             <>
               {roomData
                 ?.slice(0, dataShow)
-                .map((item:any, index:any) => (
+                .map((item: any, index: any) => (
                   <SingleRoomCard key={index} singleRoomData={item} />
                 ))}
             </>

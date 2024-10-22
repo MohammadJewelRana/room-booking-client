@@ -5,7 +5,7 @@ import img2 from "@/assets/banner/your_comfort_img2.png";
 
 const Comfort = () => {
   return (
-    <div className="flex flex-col md:flex-row items-center justify-center ">
+    <div className="flex  my-12 md:my-32 flex-col md:flex-row items-center justify-center ">
       {/* Left Image */}
       <div className="md:w-3/12 flex-shrink-0 z-10">
         <Image

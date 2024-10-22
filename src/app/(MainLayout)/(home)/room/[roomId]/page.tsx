@@ -6,7 +6,7 @@ import RoomCard from "@/components/home/Card/RoomCard";
 
 const Page = ({ params }: any) => {
   return (
-    <div className="p-2">
+    <div className="p-2  ">
       <Container>
         <div className="flex  justify-between gap-2 flex-wrap">
           <div className="w-full md:w-8/12 ">
@@ -14,8 +14,8 @@ const Page = ({ params }: any) => {
             <AmenitiesRules/>
           </div>
 
-          <div className="w-full md:w-3/12 border">
-            <Reservation />
+          <div className="w-full md:w-3/12  ">
+            <Reservation id={params?.roomId} />
           </div>
         </div>
       </Container>

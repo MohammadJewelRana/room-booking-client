@@ -6,7 +6,7 @@ const page = () => {
 
 
     return (
-        <div>
+        <div className=''>
            <RoomCard dataShow={true}/>
            <Renovated/>
 

@@ -13,6 +13,7 @@ import {
   FaUser,
   FaChartLine,
   FaHome,
+  FaBook,
 } from "react-icons/fa";
 import img from "@/assets/reg/login.png";
 
@@ -21,6 +22,7 @@ const AdminSidebar = () => {
     { title: "Dashboard", iconNav: <FaTachometerAlt />, path: "/admin" },
     { title: "Create Room", iconNav: <FaPlus />, path: "/admin/createRoom" },
     { title: "Room", iconNav: <FaDoorOpen />, path: "/admin/allRoom" },
+    { title: "Booking", iconNav: <FaBook />, path: "/admin/booking" },
     { title: "User", iconNav: <FaUser />, path: "/admin/user" },
     { title: "Settings", iconNav: <FaCog />, path: "/admin" },
     { title: "Analytics", iconNav: <FaChartLine />, path: "/admin" },

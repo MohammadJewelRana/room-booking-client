@@ -1,12 +1,194 @@
-import React from 'react';
+/* eslint-disable jsx-a11y/label-has-associated-control */
+"use client";
 
-const Reservation = () => {
-    return (
-        <div className='border bg-gray-800'>
-            Reservation
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Id totam ea quibusdam dolorem quam, et facere? Aliquam illum eaque incidunt veritatis tempora, maxime eius, nisi voluptate provident doloribus iure consequatur ut quam, vitae eveniet quod officiis quae pariatur! Aliquid doloremque numquam perspiciatis illum minus veritatis iure quod asperiores nam facilis, odit natus quibusdam fugit excepturi nobis aut laudantium? Ea dolor impedit earum velit reprehenderit eius a cumque sequi? Id obcaecati rerum nisi ad? Iure adipisci officia esse. Beatae suscipit excepturi dolore velit unde consequatur, molestias fugiat facilis nostrum pariatur, odio nulla eligendi consequuntur quis culpa repellendus facere ex sint eveniet illo officiis dicta veritatis minima. Natus minima nulla blanditiis omnis cupiditate doloribus atque earum ut debitis, nam ad numquam tempora iste asperiores pariatur recusandae! Neque omnis provident nobis aliquid sunt excepturi! Voluptate quasi asperiores praesentium nisi sapiente maxime laudantium expedita sed, maiores pariatur doloribus suscipit ullam nemo. Nulla eum quas itaque fugit magnam ea nisi recusandae, saepe cumque sapiente reiciendis fugiat exercitationem doloremque tenetur non. Eum quo atque repellat, deleniti ipsam, debitis excepturi quibusdam exercitationem a, sunt dolorem doloremque id! Rem modi quam accusantium minima, natus sapiente dolor id dolorem libero maxime corrupti obcaecati, molestiae tempora, saepe dolores ex! Quas!</p>
-        </div>
+import React, { useState, useEffect } from "react";
+import { addDays } from "date-fns";
+import DatePicker from "react-datepicker";
+import { useForm } from "react-hook-form";
+import "react-datepicker/dist/react-datepicker.css"; // Import CSS for date picker
+import { formatToISO } from "@/utils/DateToIso";
+import { useGetSingleRoom } from "@/hooks/getSingleRoom.hook";
+
+const Reservation = ({ id }: { id: string }) => {
+    const [reservedDates, setReservedDates] = useState<Date[]>([]);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [grandTotal, setGrandTotal] = useState(0); // New state for grand total
+
+  const { data, isLoading, isError, error } = useGetSingleRoom(id as string);
+  const singleData = data?.data;
+//   console.log(singleData);
+
+  // Dummy data for reserved dates
+  const reservedDatesData = [new Date("2024-10-20"), new Date("2024-10-21")];
+
+  const vatPercentage = 0.1; // 10% VAT
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setValue,
+    formState: { errors },
+  } = useForm();
+
+  const checkInDate = watch("checkInDate");
+  const checkOutDate = watch("checkOutDate");
+
+  const roomCount = watch("roomCount");
+  const numberOfPersons = watch("numberOfPersons");
+
+  useEffect(() => {
+    setReservedDates(reservedDatesData); // Load reserved dates data
+  }, []);
+
+  // Function to check if a date is reserved
+  const isReserved = (date:any) => {
+    return reservedDates.some(
+      (reservedDate) => date.getTime() === reservedDate.getTime()
     );
+  };
+
+  // Calculate total price when roomCount or roomType changes
+  useEffect(() => {
+    const pricePerRoom = singleData?.rent || 0;
+    const totalRoomPrice = pricePerRoom * roomCount;
+    setTotalPrice(totalRoomPrice);
+
+    // VAT and rent cost calculations
+    const vatAmount = totalRoomPrice * vatPercentage;
+    const finalTotal = totalRoomPrice + vatAmount;
+    setGrandTotal(finalTotal);
+  }, [roomCount]);
+
+  const onSubmit = (data:any) => {
+    const finalData = {
+      ...data,
+      checkInDate: formatToISO(data.checkInDate),
+      checkOutDate: formatToISO(data.checkOutDate),
+      roomCount: parseInt(data?.roomCount),
+      numberOfPersons: parseInt(data?.numberOfPersons),
+      totalPrice: grandTotal,
+    };
+    console.log(finalData);
+
+    // Handle reservation submission (e.g., send to an API)
+  };
+
+  return (
+    <div className="bg-gray-800 p-4 rounded-lg text-white">
+      <h2 className="text-xl font-semibold mb-4">Reservation</h2>
+
+      <form onSubmit={handleSubmit(onSubmit)}>
+        {/* Check-In Date */}
+        <div className="mb-4">
+          <label className="block mb-2">Check-In Date:</label>
+          <DatePicker
+            selected={checkInDate}
+            onChange={(date) => setValue("checkInDate", date)}
+            filterDate={(date) => !isReserved(date)}
+            placeholderText="Select a check-in date"
+            className="p-2 rounded-md w-full"
+            minDate={new Date()} // Prevent past date selection
+          />
+          {errors.checkInDate && (
+            <p className="text-red-500">Check-in date is required</p>
+          )}
+        </div>
+
+        {/* Check-Out Date */}
+        <div className="mb-4">
+          <label className="block mb-2">Check-Out Date:</label>
+          <DatePicker
+            selected={checkOutDate}
+            onChange={(date) => setValue("checkOutDate", date)}
+            filterDate={(date) => date > checkInDate && !isReserved(date)}
+            placeholderText="Select a check-out date"
+            className="p-2 rounded-md w-full"
+            minDate={addDays(checkInDate, 1)} // Ensure check-out is after check-in
+          />
+          {errors.checkOutDate && (
+            <p className="text-red-500">Check-out date is required</p>
+          )}
+        </div>
+
+        {/* Room Type */}
+        <div className="mb-4">
+          <label className="block mb-2">Room Type:</label>
+          <select
+            {...register("roomType", { required: true })}
+            className="p-2 rounded-md w-full"
+          >
+            <option value="single">Single</option>
+            <option value="double">Double</option>
+            <option value="suite">Suite</option>
+          </select>
+          {errors.roomType && (
+            <p className="text-red-500">Select a room type</p>
+          )}
+        </div>
+
+        {/* Room Count */}
+        <div className="mb-4">
+          <label className="block mb-2">Room Count:</label>
+          <select
+            {...register("roomCount", { required: true })}
+            className="p-2 rounded-md w-full"
+          >
+            <option value={1}>1</option>
+            <option value={2}>2</option>
+            <option value={3}>3</option>
+          </select>
+          {errors.roomCount && (
+            <p className="text-red-500">Select room count</p>
+          )}
+        </div>
+
+        {/* Number of Persons */}
+        <div className="mb-4">
+          <label className="block mb-2">Number of Persons:</label>
+          <input
+            type="number"
+            {...register("numberOfPersons", { required: true, min: 1 })}
+            defaultValue={1}
+            min="1"
+            className="p-2 rounded-md w-full"
+          />
+          {errors.numberOfPersons && (
+            <p className="text-red-500">Enter a valid number of persons</p>
+          )}
+        </div>
+
+        {/* Price Breakdown */}
+        <div className="bg-gray-900 p-4 rounded-md mt-4">
+          <h3 className="text-lg font-semibold pb-4">Price Breakdown:</h3>
+          <p className="py-3">
+            Room Price{" "}
+            <span className="text-[12px]">
+              {singleData?.rent} x{roomCount}
+            </span>{" "}
+            : {singleData?.rent * roomCount}
+          </p>
+          <p className="py-2">
+            VAT (10%): $ {singleData?.rent * roomCount * vatPercentage}
+          </p>
+          <hr />
+          <p className="text-xl font-semibold mt-2">
+            Grand Total: ${" "}
+            {singleData?.rent * roomCount +
+              singleData?.rent * roomCount * vatPercentage}
+          </p>
+        </div>
+
+        {/* Submit Button */}
+        <button
+          type="submit"
+          className="mt-4 w-full bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-md"
+        >
+          Reserve
+        </button>
+      </form>
+    </div>
+  );
 };
 
 export default Reservation;
