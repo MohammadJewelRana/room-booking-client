@@ -8,7 +8,7 @@ const Renovated = () => {
         style={{ backgroundImage: `url(${banner.src})` }} // Use imported image for the background
       >
         {/* Overlay for darker background effect */}
-        <div className="absolute inset-7 bg-black bg-opacity-0"></div>
+        <div className="absolute inset-7 bg-black bg-opacity-0" />
 
         <div className="relative max-w-7xl mx-auto h-full flex flex-col justify-center items-center text-center text-black px-4">
           <h1 className="text-xl font-bold mb-4 tracking-widest">
@@ -37,7 +37,7 @@ const Renovated = () => {
           </button>
 
           {/* add a vertical line in this div height 100px */}
-          <div className="h-24 border-l-2 border-slate-800  mt-12"></div>
+          <div className="h-24 border-l-2 border-slate-800  mt-12" />
         </div>
       </div>
     </div>

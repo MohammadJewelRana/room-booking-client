@@ -1,4 +1,5 @@
-import { IInput } from "@/src/types";
+ 
+import { IInput } from "@/types";
 import { Textarea } from "@nextui-org/input";
 import { useFormContext } from "react-hook-form";
 

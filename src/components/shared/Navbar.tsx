@@ -28,7 +28,12 @@ const Navbar = () => {
     <>
       {navItemData?.map((item) => (
         <>
-          {item?.subItems ? (
+         <li className="capitalize flex mb-2  lg:-mb-2">
+              <Link href={item?.path}>
+                {item?.iconNav} {item?.title}
+              </Link>
+            </li>
+          {/* {item?.subItems ? (
             <>
               {" "}
               <li className="capitalize mb-2 lg:-mb-2">
@@ -51,13 +56,9 @@ const Navbar = () => {
                 </details>
               </li>
             </>
-          ) : (
-            <li className="capitalize flex mb-2  lg:-mb-2">
-              <Link href={item?.path}>
-                {item?.iconNav} {item?.title}
-              </Link>
-            </li>
-          )}
+          ) : ( */}
+            
+          {/* )} */}
         </>
       ))}
     </>

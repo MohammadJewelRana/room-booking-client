@@ -4,7 +4,7 @@ import FXForm from "@/components/form/FXForm";
 import FXInput from "@/components/form/FXInput";
 import Loading from "@/components/UI/Loading";
 import { useUserRegistration } from "@/hooks/auth";
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { FieldValues, SubmitHandler } from "react-hook-form";
 
 const Registrtaion = () => {
   const { mutate: handleUserRegistration, isPending } = useUserRegistration();

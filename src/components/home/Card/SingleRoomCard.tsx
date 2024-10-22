@@ -1,12 +1,12 @@
 import React from "react";
 import SwiperCard from "./SwiperCard";
-import { FaBed, FaDollarSign, FaPeopleArrows } from "react-icons/fa";
+import { FaArrowRight, FaBed, FaPeopleArrows } from "react-icons/fa";
 import Link from "next/link";
 
 const SingleRoomCard = ({ singleRoomData }: any) => {
   return (
     <div>
-      <div className="w-[400px] shadow-sm  p-2">
+      <div className="w-[370px] shadow-sm  p-2">
         {/* image  */}
         <div>
           <SwiperCard imageArray={singleRoomData?.roomImages} />
@@ -32,11 +32,12 @@ const SingleRoomCard = ({ singleRoomData }: any) => {
             offering an unparalleled level
           </p>
         </div>
-        <div className="flex justify-between items-center   ">
-          <Link href={`/room/${singleRoomData?.id}`}>
-            <button className=" text-sm underline py-4 text-blue-600">
-              Explore more
+        <div className="flex justify-between items-center   py-2">
+          <Link href={`/room/${singleRoomData?.id}`} className="flex items-center gap-2 shadow-md px-4 py-2 hover:bg-gray-100 duration-300 hover:transition-all rounded-md">
+            <button className=" text-md     text-blue-600">
+             Book Now  
             </button>
+            <FaArrowRight/>
           </Link>
           <div className="bg-slate-300 px-4 py-2 rounded-md">
             <p>

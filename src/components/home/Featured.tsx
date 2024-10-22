@@ -12,15 +12,16 @@ import Container from "../UI/Container";
 
 const Featured = () => {
   const featureData = [
-    { title: "Parking", iconFeature: parking },
-    { title: "Media", iconFeature: group },
-    { title: "Swimming Pool", iconFeature: swimming },
-    { title: "Spa", iconFeature: spa },
-    { title: "GYM", iconFeature: gym },
-    { title: "Wifi", iconFeature: wifi },
-    { title: "Breakfast", iconFeature: breakfast },
-    { title: "Workspace", iconFeature: work },
+    { title: "Parking", iconFeature: parking, description: 'Ample parking spaces available for your convenience.' },
+    { title: "Media", iconFeature: group, description: 'Enjoy access to the latest entertainment and media services.' },
+    { title: "Swimming Pool", iconFeature: swimming, description: 'Relax and unwind in our luxurious swimming pool.' },
+    { title: "Spa", iconFeature: spa, description: 'Indulge in rejuvenating spa treatments during your stay.' },
+    { title: "GYM", iconFeature: gym, description: 'Stay fit with access to our state-of-the-art gym facilities.' }, 
+    { title: "Wifi", iconFeature: wifi, description: 'Stay connected with complimentary high-speed Wi-Fi.' },
+    { title: "Breakfast", iconFeature: breakfast, description: 'Start your day with a delicious and complimentary breakfast.' },
+    { title: "Workspace", iconFeature: work, description: 'Work efficiently with our dedicated workspace amenities.' },
   ];
+  
 
   return (
   <div className="mb-36">
@@ -36,11 +37,11 @@ const Featured = () => {
         </p>
       </div>
 
-      <div className="  flex items-center justify-between gap-24 flex-wrap ">
+      <div className="  flex items-center justify-center md:justify-between gap-8 flex-wrap ">
         {/* <div className=" grid grid-cols-2 md:grid-cols-5 lg:grid-cols-5 gap-4 place-items-center "> */}
         {featureData?.map((item, index) => (
           <>
-            <div key={index} className="text-gray-600 ">
+            <div key={index} className="text-gray-600 flex  flex-col items-center ">
               <Image
                 src={item?.iconFeature}
                 height={200}
@@ -48,7 +49,8 @@ const Featured = () => {
                 alt="feature"
                 className="h-12 w-12 mb-3"
               />
-              <p>Parking</p>
+              <p className="font-bold py-2">{item?.title}</p>
+              <p className="max-w-[250px] text-center">{item?.description}</p>
             </div>
           </>
         ))}

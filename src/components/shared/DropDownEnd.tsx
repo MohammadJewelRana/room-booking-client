@@ -10,6 +10,7 @@ import React from "react";
 
 const DropDownEnd = () => {
   const { user, setIsLoading: userLoading } = useUser();
+
   console.log(user);
 
   const router = useRouter();

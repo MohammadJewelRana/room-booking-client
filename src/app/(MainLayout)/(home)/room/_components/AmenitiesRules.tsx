@@ -1,4 +1,3 @@
-import { title } from "process";
 import React from "react";
 import {
   FaAirFreshener,
@@ -9,7 +8,6 @@ import {
   FaBath,
   FaFan,
   FaCloud,
-  FaCheck,
   FaClock,
   FaSmokingBan,
 } from "react-icons/fa";

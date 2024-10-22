@@ -1,8 +1,5 @@
 "use client";
 
-import img1 from "@/assets/banner/your_comfort_img1.png";
-import img2 from "@/assets/banner/your_comfort_img2.png";
-import img3 from "@/assets/banner/banner1.jpg";
 
 import React, { useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -12,13 +9,13 @@ import "swiper/css/navigation";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import Image from "next/image";
 
-const SwiperCard = ({imageArray}) => {
-  const progressCircle = useRef(null);
-  const progressContent = useRef(null);
+const SwiperCard = ({imageArray}:any) => {
+  const progressCircle = useRef<SVGCircleElement | null>(null);  
+  const progressContent = useRef<HTMLDivElement | null>(null);  
 
-  const onAutoplayTimeLeft = (s, time, progress) => {
+  const onAutoplayTimeLeft = (s: any, time: number, progress: number): void => {
     if (progressCircle.current) {
-      progressCircle.current.style.setProperty("--progress", 1 - progress);
+      progressCircle.current.style.setProperty("--progress", (1 - progress).toString());
     }
     if (progressContent.current) {
       progressContent.current.textContent = `${Math.ceil(time / 1000)}s`;
@@ -43,7 +40,7 @@ const SwiperCard = ({imageArray}) => {
         className="mySwiper"
       >
         {/* Ensure a consistent number of slides */}
-        {imageArray?.map((item, index) => (
+        {imageArray?.map((item:any, index:any) => (
           <SwiperSlide key={index}>
             <Image
               src={item.src}

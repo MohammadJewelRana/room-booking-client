@@ -1,6 +1,6 @@
 
 import { loginUser, registerUser } from "@/services/AuthService";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 
