@@ -13,7 +13,7 @@ const Login = () => {
   const { setIsLoading: userLoading } = useUser();
 
   const searchParams = useSearchParams();
-  const redirect = searchParams.get("redirect"); //get redirect path
+  const redirect = searchParams.get("redirect");  
   const router = useRouter();
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
