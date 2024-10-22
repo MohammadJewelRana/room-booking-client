@@ -18,6 +18,8 @@ import { useDeleteRoom } from "@/hooks/deleteRoom.hook";
 import Swal from "sweetalert2";
 import { useGetAllRoom } from "@/hooks/getAllRoom.hook";
 import Loading from "@/components/UI/Loading";
+import UpdateRoom from "@/components/modal/UpdateRoom";
+import { toast } from "sonner";
 
 const AdminRoomCard = () => {
   const imageData = [img1, img2, img3];
@@ -44,17 +46,28 @@ const AdminRoomCard = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        deleteRoomMutation.mutate(roomId);
-        refetch();
+        deleteRoomMutation.mutate(roomId, {
+          onSuccess: () => {
+            // toast.success("Room deleted successfully!");  
+            refetch();  
+          },
+          onError: (error) => {
+            toast.error(`Error deleting room: ${error.message}`);  
+          },
+        });
       }
     });
   };
+  
 
   return (
     <>
       {isLoading && <Loading />}
 
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <div className="flex items-center justify-between flex-wrap
+       gap-6">
+      {/* <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 place-items-center
+       gap-6"> */}
         {roomData?.map((item: any) => (
           <div
             key={item?._id}
@@ -105,13 +118,17 @@ const AdminRoomCard = () => {
             {hoveredRoomId === item?._id && (
               <div className="absolute top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-black bg-opacity-50 text-white rounded-md z-10 cursor-pointer">
                 <div className="flex space-x-4">
+                 
                   <button title="View" className="flex items-center">
                     <Link href={`/room/${item?._id}`}>
                       <FaEye className="text-xl" />
                     </Link>
                   </button>
-                  <button title="Edit" className="flex items-center">
-                    <FaEdit className="text-xl" />
+                  
+                  <button   title="Edit" className="flex items-center">
+                    <UpdateRoom refetch={refetch} item={item}/>
+                    {/* <FaEdit className="text-xl" /> */}
+
                   </button>
                   <button
                     onClick={() => handleDelete(item?._id)} // Pass the correct room ID

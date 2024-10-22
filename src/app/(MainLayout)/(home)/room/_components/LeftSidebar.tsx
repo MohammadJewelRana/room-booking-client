@@ -4,6 +4,8 @@ import Image from "next/image";
 import img from "@/assets/room/room3_gallery1-600x598.png";
 import { FaBed, FaPeopleArrows } from "react-icons/fa";
 import { useGetSingleRoom } from "@/hooks/getSingleRoom.hook";
+import CardSkeleton from "@/components/skeleton/CardSkeleton";
+import RoomDetailSkeleton from "@/components/skeleton/RoomDetailsSkeleton";
 
 const LeftSidebar = ({ id }: { id: string }) => {
   const { data, isLoading, isError, error } = useGetSingleRoom(id as string);
@@ -12,7 +14,9 @@ const LeftSidebar = ({ id }: { id: string }) => {
   // console.log(singleData);
 
   return (
-    <div className="">
+   <>
+   {isLoading && <RoomDetailSkeleton/>}
+     <div className="">
       {/* params: {id} */}
       <div>
         <div className="relative z-10">
@@ -67,6 +71,7 @@ const LeftSidebar = ({ id }: { id: string }) => {
         <div>show calender two</div>
       </div> */}
     </div>
+   </>
   );
 };
 
